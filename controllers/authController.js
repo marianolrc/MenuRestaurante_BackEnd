@@ -1,15 +1,15 @@
 const { response } = require('express');
 const User = require('../models/userModel');
 const jwt = require('jsonwebtoken');
-require('dotenv').config();
+
 
 const secretKey = process.env.SECRET_KEY;
 
-exports.login = async (req, res) => {
-    const { username, password } = req.body;
+const login = async (req, res) => {
+    const { email, password } = req.body;
 
     try {
-        const user = await User.findOne({ username });
+        const user = await User.findOne({ email: email }).then((data) => res.json(data));
 
         if (!user || user.password !== password) {
             return res.status(401).json({ error: 'Invalid credentials' });
@@ -21,3 +21,7 @@ exports.login = async (req, res) => {
         response.status(500).json({ error: err.message });
     }
 };
+
+module.exports = {
+    login,
+}

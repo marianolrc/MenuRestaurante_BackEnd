@@ -43,7 +43,7 @@ const getProduct = async (req, res) => {
   const { productId } = req.params;
 
   try {
-    const getProduct = await Product.findOne({ productId });
+    const getProduct = await Product.findOne({ _id: productId });
     if (!getProduct) {
       return res.status(404).json({ error: 'Product not found' });
     }
@@ -54,9 +54,9 @@ const getProduct = async (req, res) => {
 };
 
 const updateProduct = async (req, res) => {
-
+    const { productId } = req.params;
   try {
-    const updateProduct = await Product.findOneAndUpdate({_id: req.body.userId}, {
+    const updateProduct = await Product.findOneAndUpdate({_id: productId}, {
       $set: req.body
     });
     if(!updateProduct) {
@@ -72,7 +72,7 @@ const deleteProduct = async (req, res) => {
   const { productId } = req.params;
 
   try {
-    const deleteProduct = await Product.findOneAndDelete({ productId });
+    const deleteProduct = await Product.findOneAndDelete({ _id: productId });
     if (!deleteProduct) {
       return res.status(404).json({ error: 'Product Not found'});
     }

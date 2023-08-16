@@ -1,23 +1,23 @@
 // routes/productsRoutes.js
 const express = require('express');
 const router = express.Router();
-const userController = require('../controllers/productController');
+const productController = require('../controllers/productController');
 const authMiddleware = require('../middlewares/authMiddleware');
 
 // Ruta protegida por autorizacion
-router.get('/products', userController.getAllUsers);
+router.get('/products', productController.getAllProducts);
 
 // Ruta protegida para mostrar un producto
-router.get('/product/:id', userController.getAnUser);
+router.get('/product/:id', productController.getProduct);
 
 // Ruta protegida para crear un nuevo producto
-router.post('/products', authMiddleware, userController.createUser);
+router.post('/products', authMiddleware, productController.createProduct);
 
 // Ruta protegida para modificar algun producto
-router.put('/products/:id', authMiddleware, userController.updateUser);
+router.put('/products/:id', authMiddleware, productController.updateProduct);
 
 // Ruta protegida para eliminar un producto
-router.delete('/products/:id', authMiddleware, userController.deleteUser);
+router.delete('/products/:id', authMiddleware, productController.deleteProduct);
 
 // Aquí puedes agregar más rutas para obtener, actualizar o eliminar usuarios.
 

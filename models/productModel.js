@@ -1,6 +1,6 @@
-const { Schema } = required('mongoose');
+const mongoose = require('mongoose');
 
-const productSchema = new Schema({
+const productSchema = new mongoose.Schema({
     category_product: {
         type: String,
         required:[true, "Category is required, it can't be empty"]
@@ -18,13 +18,19 @@ const productSchema = new Schema({
         required:[true, "Product Description is required"]
     },
     product_price: {
-        type: Double,
+        type: Number,
+        default: 0.0,
         required:[true,]
     },
     product_img: {
-        title: String,
-        image: Buffer,
-        required:[true, "Product image is required"]
+        title: {
+            type: String,
+            required: [true, "Product image title is required"]
+        },
+        image: {
+            type: Buffer,
+            required: [true, "Product image data is required"]
+        }
     },
     product_state: {
         type: String,
@@ -34,6 +40,6 @@ const productSchema = new Schema({
     }
 });
 
-const Product = moongose.model("Product", productSchema);
+const Product = mongoose.model("Product", productSchema);
 
 module.exports = Product;

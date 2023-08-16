@@ -12,6 +12,7 @@ const createUser = async (req, res) => {
       state,
       rol,
     });
+    console.log(newUser);
     await newUser.save();
     res.status(201).json(newUser);
   } catch (error) {
@@ -29,8 +30,7 @@ const getAllUsers = async (req, res) => {
 }
 
 const getUser = async (req, res) => {
-  const { userId } = req.params;
-
+  const userId = req.params.id;
   try {
     const getUser = await User.findOne({ _id: userId });
     if (!getUser) {
@@ -43,7 +43,7 @@ const getUser = async (req, res) => {
 };
 
 const updateUser = async (req, res) => {
-    const { userId } = req.params;
+    const  userId = req.params.id;
 
   try {
     const updateUser = await User.findOneAndUpdate({_id: userId}, {
@@ -59,8 +59,8 @@ const updateUser = async (req, res) => {
 }
 
 const deleteUser = async (req, res) => {
-  const { userId } = req.params;
-
+  const  userId  = req.params.id;
+  console.log(req.params.id);
   try {
     const deleteUser = await User.findOneAndDelete({ _id: userId });
     if (!deleteUser) {
