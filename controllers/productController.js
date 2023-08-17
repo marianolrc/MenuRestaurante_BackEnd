@@ -1,16 +1,30 @@
 // controllers/productController.js
 const Product = require('../models/productModel');
 
+const multer = require('multer');
+const storage = multer.memoryStorage(); // Almacenar la imagen en memoria
+const upload = multer({ storage: storage });
+
+// Middleware para cargar la imagen
+const uploadImage = upload.single('product_img');
+
+
 // Función para crear un nuevo producto
 const createProduct = async (req, res) => {
   try {
+
+    console.log(req.body);
+
+    if (!req.file) {
+      return res.status(400).json({ error: 'No se ha proporcionado ninguna imagen' });
+    }
+
     const {
         category_product,
         subcategory_product,
         product_name,
         product_desciption,
         product_price,
-        product_img,
         product_state
     } = req.body;
 
@@ -20,11 +34,20 @@ const createProduct = async (req, res) => {
         product_name,
         product_desciption,
         product_price,
-        product_img,
         product_state
     });
+
+
+
+    if (req.file) {
+      // Si se adjuntó una imagen en la solicitud
+      newProduct.product_img.title = req.file.originalname;
+      newProduct.product_img.image = req.file.buffer;
+    }
+
     await newProduct.save();
     res.status(201).json(newProduct);
+
   } catch (error) {
     res.status(500).json({ error: 'Error to create a new product' });
   }

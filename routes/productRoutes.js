@@ -8,7 +8,7 @@ const authMiddleware = require('../middlewares/authMiddleware');
 router.get('/products', productController.getAllProducts);
 
 // Ruta protegida para mostrar un producto
-router.get('/product/:id', productController.getProduct);
+router.get('/products/:id', productController.getProduct);
 
 // Ruta protegida para crear un nuevo producto
 router.post('/products', authMiddleware, productController.createProduct);
