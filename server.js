@@ -2,6 +2,8 @@
 const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
+const bodyParser = require('body-parser');
+
 //const dbConfig = require('./database/dbConfig');
 require('dotenv').config();
 
@@ -21,6 +23,7 @@ dbConnection()
         app.use(express.json());
         app.use(cors());
         app.use(morgan('dev'));
+        app.use(bodyParser.urlencoded({ extended: true}));
 
         // Routes
         app.use('/api', require('./routes/userRoutes'));

@@ -22,8 +22,8 @@ const userSchema = new mongoose.Schema({
     },
     rol: {
         type: String,
-        enum:['user', 'admin'],
-        default: 'user',
+        enum:['client', 'admin'],
+        default: 'client',
         required:[true,"Rol is required, it cannot be empty"]
     }
 });
