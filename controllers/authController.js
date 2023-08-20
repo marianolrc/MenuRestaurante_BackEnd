@@ -1,9 +1,8 @@
-const { response } = require('express');
 const User = require('../models/userModel');
 const jwt = require('jsonwebtoken');
 
-
 const secretKey = process.env.SECRET_KEY;
+
 
 const login = async (req, res) => {
     const { email, password } = req.body;
@@ -15,10 +14,16 @@ const login = async (req, res) => {
             return res.status(401).json({ error: 'Invalid credentials' });
         }
 
-        const token = jwt.sign({ userId: user._id }, secretKey, { expiresIn: '1h'});
-        res.json({ token });
+        if(user.rol === 'admin') {
+            const token = jwt.sign({ userId: user._id }, secretKey, { expiresIn: '1h'});
+
+
+            res.json({ userState: user.rol, token });
+        } else {
+            res.status(200).json({ userState: user.rol });
+        }
     } catch (err) {
-        response.status(500).json({ error: err.message });
+        res.status(500).json({ error: err.message });
     }
 };
 
