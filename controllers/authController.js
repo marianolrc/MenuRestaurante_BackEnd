@@ -18,11 +18,12 @@ const login = async (req, res) => {
             const token = jwt.sign({ userId: user._id }, secretKey, { expiresIn: '1h'});
 
             res.cookie('token', token, { httpOnly: true, maxAge: 3600000 }); // Configura la cookie
-            console.log(token);
-            res.json({ userState: user.rol, authorization: token });
+            //console.log(token);
+            //console.log(user.nameSurname);
+            res.status(200).json({ userState: user.rol,  userName: user.nameSurname, authorization: token});
         } else {
-            res.cookie('token', '', { httpOnly: true, maxAge: 0 }); // Elimina la cookie si no es admin
-            res.status(200).json({ userState: user.rol });
+            res.cookie('token', { httpOnly: true, maxAge: 0 }); // Elimina la cookie si no es admin
+            res.status(200).json({ userState: user.rol, userName: user.nameSurname });
         }
     } catch (err) {
         res.status(500).json({ error: err.message });

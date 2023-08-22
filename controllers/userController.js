@@ -4,9 +4,9 @@ const User = require('../models/userModel');
 // Función para crear un nuevo usuario
 const createUser = async (req, res) => {
   try {
-    const { name_surname, email, password, state, rol } = req.body;
+    const { nameSurname, email, password, state, rol } = req.body;
     const newUser = new User({
-      name_surname,
+      nameSurname,
       email,
       password,
       state,
@@ -16,7 +16,8 @@ const createUser = async (req, res) => {
     await newUser.save();
     res.status(201).json(newUser);
   } catch (error) {
-    res.status(500).json({ error: 'Error to create a new user' });
+    res.status(500).json({ error: 'Error to create a new user', error });
+    console.log(error);
   }
 };
 
