@@ -5,13 +5,13 @@ require('dotenv').config();
 const secretKey = process.env.SECRET_KEY;
 
 const authMiddleware = (req, res, next) => {
-    const cookieHeader = req.headers['cookie'];
+    const token = req.headers['auth'];
 
-    //console.log(cookieHeader);
+    console.log(token);
 
-    if(cookieHeader) {
-        const cookies = cookie.parse(cookieHeader);
-        const token = cookies['token'];
+    if(token) {
+        // const cookies = cookie.parse(cookieHeader);
+        // const token = cookies['token'];
 
         if (!token) {
             return res.status(401).json({ error: 'Unauthorized' });
